@@ -57,8 +57,7 @@ $(function() {
       url: 'data.json',
       dataType: 'json',
       success: function(data) {
-        app_data = data;
-        console.log(app_data);
+        app_data = data;        
         initFormHander();
       }
     })
