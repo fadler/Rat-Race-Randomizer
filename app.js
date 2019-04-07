@@ -66,9 +66,8 @@ $(function() {
       if (map_cb.prop('checked')) {
         whitelist.push(map_cb.val());
       }
-    }                
-    
-    if (whitelist == []) {
+    }                   
+    if (whitelist.length == 0) {
       console.error('No map selected');
       return;
     }
