@@ -40,11 +40,11 @@ $(function() {
   }
   
   function renderResults(heroes, map) {
-    output_players.html('');
+    output_players.html('');    
     for (let i = 0; i < heroes.length; i++) {
       let hero = heroes[i];
-      let text = hero.hero + ', ' +  hero.career;
-      output_players.append($('<li></li>').addClass('list-group-item').text(text));
+      let text = 'Career ' + (i+1) + ': ' + hero.career + ' (' +  hero.hero + ')';      
+      output_players.append($('<li></li>').text(text));
     }
     
     output_map.text(map);
