@@ -6,3 +6,9 @@
 	padding: 0;
 	border: none;
 }
+
+.custom-control-input:checked ~
+.custom-control-label::before {
+	border-color: #dc3545;
+	background-color: #dc3545;
+} 
