@@ -19,31 +19,46 @@
     "Garden of Morr",
     "Engines of War"
   ],
-  "careers":{
-    "Markus Kruber":[
-      "Mercenary",
-      "Huntsman",
-      "Foot Knight"
-    ],
-    "Bardin Goreksson":[
-      "Ranger Veteran",
-      "Ironbreaker",
-      "Slayer"
-    ],
-    "Kerillian":[
-      "Waystalker",
-      "Handmaiden",
-      "Shade"
-    ],
-    "Victor Saltzpyre":[
-      "Witch Hunter Captain",
-      "Bounty Hunter",
-      "Zealot"
-    ],
-    "Sienna Fuegonasus":[
-      "Battle Wizard",
-      "Pyromancer",
-      "Unchained"
-    ]
-  }
+  "heroes":[
+    {
+      "hero":"Markus Kruber",
+      "careers":[
+        "Mercenary",
+        "Huntsman",
+        "Foot Knight"
+      ]
+    },
+    {
+      "hero":"Bardin Goreksson",
+      "careers":[
+        "Ranger Veteran",
+        "Ironbreaker",
+        "Slayer"
+      ]
+    },
+    {
+      "hero":"Kerillian",
+      "careers":[
+        "Waystalker",
+        "Handmaiden",
+        "Shade"
+      ]
+    },
+    {
+      "hero":"Victor Saltzpyre",
+      "careers":[
+        "Witch Hunter Captain",
+        "Bounty Hunter",
+        "Zealot"
+      ]
+    },
+    {
+      "hero":"Sienna Fuegonasus",
+      "careers":[
+        "Battle Wizard",
+        "Pyromancer",
+        "Unchained"
+      ]
+    }
+  ]
 }
