@@ -2,12 +2,16 @@
 $(function() {
   const form = $('#form');
   const select = $('#form-players');
-  const output_players = $('#output-players');
-  const output_map = $('#output-map');
+  const output_template = $('#output-template');
   const output = $('#output');
   let app_data = {};
      
   loadData();
+  
+  output.on('click','button.result-close', function () {    
+    $(this).closest('.result').remove();
+  });
+  
   function initFormHander() {
     form.on('submit', function(e) {
       e.preventDefault();    
@@ -15,7 +19,6 @@ $(function() {
     });
   }
   function randomize(players) {
-    output.prop('hidden',true);
     let heroes = app_data.heroes.slice(0);
     let selected_heroes = [];
     
@@ -36,11 +39,14 @@ $(function() {
     let m = getRndInteger(app_data.maps.length);
     let map = app_data.maps[m];
     
-    renderResults(selected_heroes, map);    
+    addResult(selected_heroes, map);    
   }
   
-  function renderResults(heroes, map) {
-    output_players.html('');    
+  function addResult(heroes, map) {
+    let result = $(output_template.html());
+    
+    let output_players = result.find('.output-players');
+    let output_map = result.find('.output-map');
     for (let i = 0; i < heroes.length; i++) {
       let hero = heroes[i];
       let text = 'Career ' + (i+1) + ': ' + hero.career + ' (' +  hero.hero + ')';      
@@ -48,7 +54,8 @@ $(function() {
     }
     
     output_map.text(map);
-    output.prop('hidden',false);
+    
+    output.append(result);
   }
   
   function loadData() {
@@ -57,10 +64,12 @@ $(function() {
       url: 'data.json',
       dataType: 'json',
       success: function(data) {
-        app_data = data;        
+        app_data = data;
+        //initCheckboxes();
         initFormHander();
+        form.find('button').prop('disabled',false);
       }
-    })
+    });        
   }
   
   function getRndInteger(max) {
