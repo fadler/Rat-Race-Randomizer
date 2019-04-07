@@ -17,14 +17,12 @@
       <div class="row">
         <div class="col">
           <form id="form">  
-            <div class="form-row">
+            <div class="form-group row">
               <div class="col-12">
                 <label>
-                  <b>
-                    <a class="text-white" href="#form-maps-collapse" data-toggle="collapse">Maps&nbsp;<i class="fas fa-caret-down"></i></a>
-                  </b>
+                  <b>Maps</b>
                 </label>
-                <div class="collapse" id="form-maps-collapse">	                               
+                <div class="">	                                
 	                <div class="row" id="form-maps">	                 
 	                </div>
 	                <div class="btn-group mt-3">
@@ -34,7 +32,7 @@
                 </div>
               </div>
             </div>       
-            <div class="form-row">
+            <div class="form-group row">
               <div class="col-12 col-sm-6">   
 	              <label for="form-players"><b>Players</b></label>              
 		            <select id="form-players" class="form-control">
@@ -48,17 +46,31 @@
 	              <label class="w-100">&nbsp;</label>
 	              <button type="submit" disabled class="btn btn-block btn-danger">randomize</button>
 	            </div>   	            	           
-            </div>                                   
+            </div>          
+             <div class="form-group row">
+              <div class="col-12 col-sm-6">   
+                <label for="form-batch"><b>Results</b></label>              
+                <select id="form-batch" class="form-control">                  
+                  <option value="2">2 results</option>
+                  <option value="3">3 results</option>
+                  <option value="4">4 results</option>
+                </select>
+              </div>
+              <div class="col-12 col-sm-6">
+                <label class="w-100">&nbsp;</label>
+                <button type="submit" disabled class="btn btn-block btn-danger" id="form-batch-submit">batch randomize</button>
+              </div>                             
+            </div>                            
           </form>
         </div>
       </div>      
       <div class="row mt-3" id="output">        
       </div>      
       <div hidden id="output-template">
-        <div class="col-12 col-sm-6 col-md-4 mb-4 result">
+        <div class="col-12 col-sm-6 mb-4 result">
           <div class="card bg-secondary">
             <div class="card-header">
-               <b>Map:&nbsp;<span class="output-map"></span></b>              
+               <b><span class="output-map"></span></b>              
                <button type="button" class="result-close text-white">
                  <i class="fas fa-times"></i>
                </button>          

@@ -3,6 +3,7 @@ $(function() {
   const form = $('#form');
   const form_maps = $('#form-maps');
   const form_players = $('#form-players');
+  const form_batch = $('#form-batch');
   const output_template = $('#output-template');  
   const output = $('#output');
   let app_data = {};
@@ -16,7 +17,29 @@ $(function() {
   function initFormHander() {
     form.on('submit', function(e) {
       e.preventDefault();    
-      randomize(parseInt(form_players.val()));
+      
+      let batch = e.originalEvent.explicitOriginalTarget.id == "form-batch-submit";
+      let n_players = parseInt(form_players.val());
+      if (!batch) {
+        // clear results if previous action was batch result
+        if (form.data('batch-result') == true) {
+          output.html('');
+          form.data('batch-result', false);
+        }
+        randomize(n_players);
+        
+      } else {
+        let n_results = parseInt(form_batch.val());
+        let label_start = 'A';
+        output.html('');
+        for (let i = 0; i < n_results; i++) {
+          let label = String.fromCharCode(label_start.charCodeAt() + i);          
+          randomize(n_players, label);
+        }
+        
+        form.data('batch-result',true);
+      }
+      
     });
   }
   
@@ -39,9 +62,12 @@ $(function() {
         $(cbs[i]).prop('checked',checked);
       }
     });
+    
+    $('#form-maps-spinner').remove();
+    form_maps.prop('hidden',false);
   }
   
-  function randomize(players) {
+  function randomize(players, label) {
     let heroes = app_data.heroes.slice(0);
     let selected_heroes = [];
     
@@ -76,10 +102,10 @@ $(function() {
     let map_index = whitelist[m]; 
     let map = app_data.maps[map_index];
     
-    addResult(selected_heroes, map);    
+    addResult(selected_heroes, map, label);    
   }
   
-  function addResult(heroes, map) {
+  function addResult(heroes, map, label) {
     let result = $(output_template.html());
     
     let output_players = result.find('.output-players');
@@ -90,7 +116,11 @@ $(function() {
       output_players.append($('<li></li>').text(text));
     }
     
-    output_map.text(map);
+    let map_text = 'Map: ' + map;
+    if (label != undefined) {
+      map_text = label + ' ' + map_text;
+    }
+    output_map.text(map_text);
     
     output.append(result);
   }    
@@ -104,7 +134,7 @@ $(function() {
         app_data = data;
         initCheckboxes();
         initFormHander();
-        form.find('button').prop('disabled',false);
+        form.find('button[type=submit]').prop('disabled',false);
       }
     });        
   }
