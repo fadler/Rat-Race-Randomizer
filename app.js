@@ -1,8 +1,9 @@
 'use strict';
 $(function() {
   const form = $('#form');
-  const select = $('#form-players');
-  const output_template = $('#output-template');
+  const form_maps = $('#form-maps');
+  const form_players = $('#form-players');
+  const output_template = $('#output-template');  
   const output = $('#output');
   let app_data = {};
      
@@ -15,9 +16,31 @@ $(function() {
   function initFormHander() {
     form.on('submit', function(e) {
       e.preventDefault();    
-      randomize(parseInt(select.val()));
+      randomize(parseInt(form_players.val()));
     });
   }
+  
+  function initCheckboxes() {
+    let cb_template = $('#map-cb-template');   
+    for (let i = 0; i < app_data.maps.length; i++) {
+      let map = app_data.maps[i];
+      let cb = $(cb_template.html());      
+      let id = 'map-' + i;
+      cb.find('input').attr('id', id).attr('value', i);      
+      cb.find('label').attr('for', id).text(map);
+      form_maps.append(cb);
+    }      
+    
+    $('#form-maps-check-all, #form-maps-uncheck-all').on('click', function(e) {
+      e.preventDefault();
+      let cbs = form_maps.find('input[name=map]');
+      let checked = ($(this).attr('id') == 'form-maps-check-all' ? true : false);
+      for (let i = 0; i < cbs.length; i++) {
+        $(cbs[i]).prop('checked',checked);
+      }
+    });
+  }
+  
   function randomize(players) {
     let heroes = app_data.heroes.slice(0);
     let selected_heroes = [];
@@ -35,9 +58,24 @@ $(function() {
       let career = hero.careers[c];      
       selected_heroes.push({hero: hero.hero, career: career});
     }    
-    //select a map
-    let m = getRndInteger(app_data.maps.length);
-    let map = app_data.maps[m];
+    // get checked maps
+    let map_cbs = form_maps.find('input[name=map]');
+    let whitelist = [];
+    for (let i = 0; i < map_cbs.length; i++) {
+      let map_cb = $(map_cbs[i]);
+      if (map_cb.prop('checked')) {
+        whitelist.push(map_cb.val());
+      }
+    }                
+    
+    if (whitelist == []) {
+      console.error('No map selected');
+      return;
+    }
+    
+    let m = getRndInteger(whitelist.length);
+    let map_index = whitelist[m]; 
+    let map = app_data.maps[map_index];
     
     addResult(selected_heroes, map);    
   }
@@ -56,7 +94,7 @@ $(function() {
     output_map.text(map);
     
     output.append(result);
-  }
+  }    
   
   function loadData() {
     $.ajax({
@@ -65,7 +103,7 @@ $(function() {
       dataType: 'json',
       success: function(data) {
         app_data = data;
-        //initCheckboxes();
+        initCheckboxes();
         initFormHander();
         form.find('button').prop('disabled',false);
       }
