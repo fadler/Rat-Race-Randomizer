@@ -1,6 +1,7 @@
 'use strict';
 $(function() {
   const form = $('#form');
+  const form_submit_button = $('.form-submit-button');
   const form_maps = $('#form-maps');
   const form_players = $('#form-players');
   const form_batch = $('#form-batch');
@@ -15,10 +16,12 @@ $(function() {
   });
   
   function initFormHander() {
-    form.on('submit', function(e) {
+      
+      
+    form_submit_button.on('click', function(e) {
       e.preventDefault();    
       
-      let batch = e.originalEvent.explicitOriginalTarget.id == "form-batch-submit";
+      let batch = e.target.id === "form-batch-submit";
       let n_players = parseInt(form_players.val());
       if (!batch) {
         // clear results if previous action was batch result
