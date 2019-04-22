@@ -19,8 +19,7 @@ $(function() {
       
       
     form_submit_button.on('click', function(e) {
-      e.preventDefault();    
-      alert("LOL");
+      e.preventDefault();
       
       let batch = e.target.id === "form-batch-submit";
       let n_players = parseInt(form_players.val());
